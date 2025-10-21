@@ -44,10 +44,18 @@ public class Calculator {
      * Werte sowie der aktuelle Operationsmodus zurückgesetzt, so dass der Rechner wieder
      * im Ursprungszustand ist.
      */
+     private boolean ce = false;
     public void pressClearKey() {
-        screen = "0";
-        latestOperation = "";
-        latestValue = 0.0;
+        if (!ce) {
+            screen = "0";
+            ce = true;
+
+        } else {
+            screen = "0";
+            latestOperation = "";
+            latestValue = 0.0;
+            ce = false;
+        }
     }
 
     /**
