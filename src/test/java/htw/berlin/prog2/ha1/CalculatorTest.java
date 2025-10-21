@@ -102,4 +102,23 @@ class CalculatorTest {
 
         assertEquals(expected, actual);
     }
+
+
+    @Test
+    @DisplayName("should not reset calculator after press C/CE once")
+    void testDeleteFunction() {
+        Calculator calc = new Calculator();
+
+        calc.pressDigitKey(3);
+        calc.pressBinaryOperationKey("x");
+        calc.pressClearKey();
+        calc.pressDigitKey(8);
+        calc.pressEqualsKey();
+
+        String expected = "24";
+        String actual = calc.readScreen();
+
+        assertEquals(expected, actual);
+    }
 }
+
