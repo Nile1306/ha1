@@ -125,17 +125,34 @@ public class Calculator {
      * Operation (ggf. inklusive letztem Operand) erneut auf den aktuellen Bildschirminhalt angewandt
      * und das Ergebnis direkt angezeigt.
      */
+    private double saveValue = 0;
+    private boolean firstEqual = true;
+    private double result = 0;
+
+
     public void pressEqualsKey() {
-        var result = switch(latestOperation) {
-            case "+" -> latestValue + Double.parseDouble(screen);
-            case "-" -> latestValue - Double.parseDouble(screen);
-            case "x" -> latestValue * Double.parseDouble(screen);
-            case "/" -> latestValue / Double.parseDouble(screen);
+        double temp;
+        if (firstEqual) {
+            saveValue = Double.parseDouble(screen);
+            temp = saveValue;
+            firstEqual = false;
+
+        } else {
+            temp = saveValue;
+            latestValue = Double.parseDouble(screen);
+        }
+         result = switch (latestOperation) {
+            case "+" -> latestValue + temp;
+            case "-" -> latestValue - temp;
+            case "x" -> latestValue * temp;
+            case "/" -> latestValue / temp;
             default -> throw new IllegalArgumentException();
         };
+
         screen = Double.toString(result);
         if(screen.equals("Infinity")) screen = "Error";
         if(screen.endsWith(".0")) screen = screen.substring(0,screen.length()-2);
         if(screen.contains(".") && screen.length() > 11) screen = screen.substring(0, 10);
+        latestValue = result;
     }
 }
